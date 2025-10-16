@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Для моего счастья</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>Для моего солнышка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         /* Основные стили */
         body {
             margin: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #1e3c72, #2a5298, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #0c1b33, #1a3658, #2c3e50, #34495e);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Roboto', sans-serif;
             color: #ffffff;
             text-align: center;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text x="0" y="18" font-size="18">❄️</text></svg>'), auto;
         }
 
         @keyframes gradient {
@@ -29,170 +28,215 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Контейнер с снежным эффектом */
-        #container {
-            z-index: 10;
-            position: relative;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6),
-                0 0 30px rgba(255, 255, 255, 0.4);
-            max-width: 750px;
-            border: 3px solid rgba(255, 255, 255, 0.8);
-            color: #2c3e50;
-        }
-
-        .snow-effect {
+        /* Снег */
+        .snow {
             position: absolute;
             top: -10px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.8) 20%, 
-                rgba(255, 255, 255, 1) 50%, 
-                rgba(255, 255, 255, 0.8) 80%, 
-                transparent 100%);
-            border-radius: 50%;
-            filter: blur(2px);
-        }
-
-        h1 {
-            font-size: 3.2em;
-            margin-bottom: 30px;
-            color: #e74c3c;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        p {
-            font-size: 1.4em;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            color: #34495e;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-        }
-
-        /* Анимированные элементы */
-        #floatingElements {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: 1;
         }
 
-        .floating {
+        .snowflake {
             position: absolute;
-            font-size: 28px;
-            animation: floatAround 10s linear infinite;
-            opacity: 0.9;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
         }
 
-        @keyframes floatAround {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            25% { transform: translate(100px, 80px) rotate(90deg) scale(1.1); }
-            50% { transform: translate(60px, 150px) rotate(180deg) scale(1); }
-            75% { transform: translate(-80px, 100px) rotate(270deg) scale(1.1); }
-            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        /* Кассета */
-        #cassettePlayer {
+        /* Контейнер */
+        #container {
+            z-index: 10;
+            position: relative;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            backdrop-filter: blur(25px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            max-width: 800px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Заголовок с Franklinity стилем */
+        .main-title {
+            margin-bottom: 40px;
+        }
+
+        .title-line-1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5em;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .title-line-2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2em;
+            font-weight: 700;
+            color: #e74c3c;
+            text-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .title-line-2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #e74c3c, transparent);
+            border-radius: 50%;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleX(0.8); opacity: 0.7; }
+            50% { transform: scaleX(1); opacity: 1; }
+        }
+
+        /* Основной текст с Overdose Sans стилем */
+        .love-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #ecf0f1;
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .love-text strong {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+/* Виниловый проигрыватель */
+        #recordPlayer {
             position: fixed;
             bottom: 30px;
             right: 30px;
-
-width: 140px;
-            height: 90px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border-radius: 12px;
-            border: 3px solid #ffffff;
+            width: 150px;
+            height: 150px;
             cursor: pointer;
             z-index: 100;
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
             transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
         }
 
-        #cassettePlayer:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 0 30px rgba(231, 76, 60, 0.8);
+        #recordPlayer:hover {
+            transform: scale(1.1);
         }
 
-        #cassettePlayer.playing {
-            animation: cassetteSpin 3s linear infinite;
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        #recordPlayer.playing {
+            animation: recordSpin 3s linear infinite;
         }
 
-        .cassette-hole {
-            width: 35px;
-            height: 35px;
-            background: #2c3e50;
+        .record {
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, #2c3e50 0%, #2c3e50 30%, #34495e 31%, #34495e 100%),
+                repeating-radial-gradient(circle at center, #ecf0f1, #ecf0f1 2px, #bdc3c7 3px, #bdc3c7 4px);
             border-radius: 50%;
-            border: 2px solid #34495e;
-            margin: 5px;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            border: 3px solid #1a1a1a;
         }
 
-        .cassette-holes {
+        .record-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 25px;
+            height: 25px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 2px solid #c0392b;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+
+        .record-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            border-radius: 50%;
             display: flex;
-            gap: 20px;
-        }
-
-        .cassette-label {
-            color: #ffffff;
-            font-size: 12px;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
             font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-            margin-top: 8px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        @keyframes cassetteSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
+        @keyframes recordSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Таймер */
-        #birthdayTimer {
+        /* Таймер реального времени */
+        #realTimer {
             margin-top: 35px;
             padding: 25px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: rgba(52, 152, 219, 0.3);
             border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .timer-text {
+        .timer-title {
+            font-family: 'Roboto', sans-serif;
             font-size: 1.3em;
             color: #ffffff;
             margin-bottom: 15px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .timer-numbers {
-            font-size: 2.2em;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-family: 'Playfair Display', serif;
+        .timer-display {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #e74c3c;
+            text-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .timer-subtitle {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.1em;
+            color: #bdc3c7;
+            font-weight: 300;
+            font-style: italic;
         }
 
         /* Секретное сообщение */
@@ -200,14 +244,28 @@ width: 140px;
             display: none;
             margin-top: 35px;
             padding: 30px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: rgba(231, 76, 60, 0.2);
             border-radius: 20px;
             animation: fadeInUp 1s ease;
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(231, 76, 60, 0.3);
+            backdrop-filter: blur(15px);
         }
 
-        @keyframes fadeInUp {
+        .secret-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.3em;
+            line-height: 1.7;
+            color: #ffffff;
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .secret-text strong {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+@keyframes fadeInUp {
             from { 
                 opacity: 0; 
                 transform: translateY(40px) scale(0.9); 
@@ -218,22 +276,23 @@ width: 140px;
             }
         }
 
-        /* Кнопки */
+        /* Кнопка */
         button {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 18px 45px;
             font-size: 1.3em;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.4s ease;
-            margin: 15px;
+            margin: 20px 0;
             box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
         }
 
         button:hover {
@@ -241,177 +300,137 @@ width: 140px;
             box-shadow: 0 15px 35px rgba(231, 76, 60, 0.6);
             background: linear-gradient(135deg, #ff6b6b, #e74c3c);
         }
-
-/* Сообщение о музыке */
-        .music-alert {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(231, 76, 60, 0.9);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            z-index: 1000;
-            font-family: 'Montserrat', sans-serif;
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <div class="music-alert" id="musicAlert">Нажми на кассету справа внизу чтобы включить музыку! 🎵</div>
-    
-    <div id="floatingElements"></div>
+    <!-- Снег -->
+    <div class="snow" id="snowContainer"></div>
 
-    <!-- Кассетный плеер -->
-    <div id="cassettePlayer" onclick="toggleMusic()">
-        <div class="cassette-holes">
-            <div class="cassette-hole"></div>
-            <div class="cassette-hole"></div>
+    <!-- Виниловый проигрыватель -->
+    <div id="recordPlayer" onclick="toggleMusic()">
+        <div class="record">
+            <div class="record-center"></div>
+            <div class="record-label">THE<br>NBHD</div>
         </div>
-        <div class="cassette-label">THE NBHD</div>
     </div>
 
     <div id="container">
-        <div class="snow-effect"></div>
-        
-        <h1>🌨️ С Днём Рождения, моё солнышко! 🌨️</h1>
-        
-        <p>Мой самый дорогой котёнок, моё бесконечное счастье! В этот холодный ноябрьский день родилось самое тёплое и светлое, что есть в моей жизни — ты.</p>
-        <p>Как будто сама вселенная подарила мне лучик света в самом тёмном времени года. Ты — мой смысл, моё вдохновение и самая большая радость.</p>
-        <p>Каждый твой смех делает мир ярче, а каждое прикосновение согревает душу. Пусть этот день будет таким же волшебным, как ты сама!</p>
+        <!-- Заголовок -->
+        <div class="main-title">
+            <div class="title-line-1">С Днем Рождения</div>
+            <div class="title-line-2">Моя Дорогая!</div>
+        </div>
 
-        <!-- Таймер -->
-        <div id="birthdayTimer">
-            <div class="timer-text">Примерно столько времени назад родился мой смысл жизни:</div>
-            <div class="timer-numbers" id="timer">16 лет 0 дней 0 часов 0 минут</div>
-            <div class="timer-text" id="timerText">и с тех пор мир стал светлее 🌟</div>
+        <!-- Текст о любви -->
+        <div class="love-text">
+            В этот холодный ноябрьский вечер, когда за окном бушует вьюга, я хочу сказать тебе о самом тёплом, что есть в моей жизни - о тебе. <strong>Твои зелёные глаза</strong> - как весенние листья в зимней стуже, они наполняют мою душу теплом и светом. 
+
+            Каждый момент рядом с тобой - это бесконечное счастье. Ты - моё укрытие от жизненных бурь, мой тихий уголок спокойствия. <strong>Моя любовь к тебе</strong> глубже океанов и выше самых далёких звёзд. 
+
+            В твоих объятиях я нахожу дом, в твоей улыбке - смысл, в твоём сердце - вечность. Спасибо, что ты есть, моё солнышко в этом холодном мире.
+        </div>
+
+        <!-- Таймер реального времени -->
+        <div id="realTimer">
+            <div class="timer-title">С момента твоего появления в этом мире:</div>
+            <div class="timer-display" id="liveTimer">16 лет 0 дней 00:00:00</div>
+            <div class="timer-subtitle">14 ноября 2008, 20:25 • Иркутское время</div>
         </div>
         
-        <button onclick="showSecretMessage()">💖 Нажми меня, любимая</button>
+        <button onclick="showSecretMessage()">💖 Открыть послание сердца</button>
         
+        <!-- Секретное сообщение -->
         <div id="secretMessage">
-            <p>Ты — самое прекрасное, что случалось со мной. Спасибо, что ты есть в моей жизни! 🌙✨</p>
-            <p>Каждый миг с тобой — это подарок судьбы, который я бережно храню в сердце.</p>
-            <p>С бесконечной любовью, твоя Лиза 💕</p>
+            <div class="secret-text">
+                <p>Ты - <strong>самое прекрасное чудо</strong>, что случалось со мной. В твоих зелёных глазах я тону, как в бескрайнем океане нежности.</p>
+                <p>Каждая секунда с тобой - это драгоценный камень в ожерелье нашей любви. <strong>Ты - моя вселенная</strong>, мой смысл и моё вечное вдохновение.</p>
+                <p>С бесконечной любовью,<br><strong>Твоя Лиза</strong> 💕</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Глобальные переменные
-        let backgroundMusic = null;
-        let isMusicPlaying = false;
-        let musicInitialized = false;
+        // Создание снега
+        function createSnow() {
+            const snowContainer = document.getElementById('snowContainer');
+            const snowflakesCount = 100;
+            
+            for (let i = 0; i < snowflakesCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                
+                const size = Math.random() * 5 + 2;
 
-        // Инициализация музыки
-        function initializeMusic() {
-            if (musicInitialized) return;
-            
-            // Прямая ссылка для скачивания из Google Диска
-            const musicUrl = 'https://drive.google.com/uc?export=download&id=1NJutSpu5iebHSqbNcqLABQ9aRS6OxnOf';
-            
-            backgroundMusic = new Audio();
-            backgroundMusic.src = musicUrl;
-            backgroundMusic.volume = 0.6;
-            backgroundMusic.loop = true;
-            backgroundMusic.preload = 'auto';
-            
-            backgroundMusic.addEventListener('canplaythrough', function() {
-                console.log("Музыка готова к воспроизведению");
-                document.getElementById('musicAlert').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('musicAlert').style.display = 'none';
-                }, 5000);
-            });
-            
-            backgroundMusic.addEventListener('error', function(e) {
-                console.log("Ошибка загрузки музыки:", e);
-                alert('Проблема с загрузкой музыки. Проверьте ссылку или попробуйте другой браузер!');
-            });
-            
-            musicInitialized = true;
+snowflake.style.width = size + 'px';
+                snowflake.style.height = size + 'px';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                snowflake.style.animationDelay = Math.random() * 10 + 's';
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                snowContainer.appendChild(snowflake);
+            }
         }
 
-        // Управление музыкой
-        function toggleMusic() {
-            if (!musicInitialized) {
-                initializeMusic();
-                // Даем время на загрузку
+        // Музыкальный плеер
+        let backgroundMusic = null;
+        let isMusicPlaying = false;
 
-setTimeout(() => {
-                    toggleMusic();
-                }, 1000);
-                return;
+        function toggleMusic() {
+            if (!backgroundMusic) {
+                // Прямая ссылка для скачивания из Google Диска
+                const musicUrl = 'https://drive.google.com/uc?export=download&id=1NJutSpu5iebHSqbNcqLABQ9aRS6OxnOf';
+                
+                backgroundMusic = new Audio();
+                backgroundMusic.src = musicUrl;
+                backgroundMusic.volume = 0.6;
+                backgroundMusic.loop = true;
+                backgroundMusic.preload = 'auto';
+                
+                backgroundMusic.addEventListener('error', function(e) {
+                    console.log("Ошибка загрузки музыки:", e);
+                    alert('Проблема с загрузкой музыки. Проверьте подключение к интернету!');
+                });
             }
             
-            const cassette = document.getElementById('cassettePlayer');
+            const recordPlayer = document.getElementById('recordPlayer');
             
             if (!isMusicPlaying) {
                 backgroundMusic.play().then(() => {
                     isMusicPlaying = true;
-                    cassette.classList.add('playing');
-                    console.log("Музыка играет");
+                    recordPlayer.classList.add('playing');
                 }).catch(error => {
                     console.log("Ошибка воспроизведения:", error);
-                    alert('Нажмите "Разрешить" для воспроизведения звука на этой странице!');
+                    alert('Нажмите "Разрешить" для воспроизведения звука!');
                 });
             } else {
                 backgroundMusic.pause();
                 isMusicPlaying = false;
-                cassette.classList.remove('playing');
-                console.log("Музыка остановлена");
+                recordPlayer.classList.remove('playing');
             }
         }
 
-        // Создание плавающих элементов
-        function createFloatingElements() {
-            const container = document.getElementById('floatingElements');
-            const symbols = ['❄️', '🌙', '⭐', '✨', '💫', '🌨️', '🦋', '🌟', '☃️', '⛄'];
-            
-            for (let i = 0; i < 15; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating';
-                element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                element.style.left = Math.random() * 100 + 'vw';
-                element.style.top = Math.random() * 100 + 'vh';
-                element.style.fontSize = (Math.random() * 25 + 20) + 'px';
-                element.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                element.style.animationDelay = Math.random() * 5 + 's';
-                
-                container.appendChild(element);
-            }
-        }
-
-        // Таймер с момента рождения - ИСПРАВЛЕННЫЙ
-        function updateBirthdayTimer() {
-            // Дата рождения: 14 ноября 2008, 20:25 Иркутское время (UTC+8)
-            const birthDate = new Date('2008-11-14T20:25:00+08:00');
+        // Таймер реального времени
+        function updateLiveTimer() {
+            const birthDate = new Date('2008-11-14T20:25:00+08:00'); // Иркутское время UTC+8
             const now = new Date();
             
             // Разница в миллисекундах
             const diff = now - birthDate;
             
-            // Расчет лет, дней, часов, минут
+            // Расчет времени
             const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
             const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // Форматирование времени
+            const formattedTime = ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
             
             // Обновление таймера
-            document.getElementById('timer').textContent = 
-                ${years} лет ${days} дней ${hours} часов ${minutes} минут;
-            
-            // Обновляем дополнительный текст
-            const timerText = document.getElementById('timerText');
-            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-            
-            if (totalDays < 30) {
-                timerText.textContent = "совсем недавно родилось моё счастье...";
-            } else if (totalDays < 365) {
-                timerText.textContent = "уже который день ты делаешь этот мир лучше";
-            } else {
-                timerText.textContent = "уже много лет ты освещаешь жизни окружающих";
-            }
+            document.getElementById('liveTimer').textContent = 
+                ${years} лет ${days} дней ${formattedTime};
         }
 
         // Секретное сообщение
@@ -421,29 +440,21 @@ setTimeout(() => {
             message.style.animation = 'fadeInUp 1s ease';
         }
 
-        // Инициализация при загрузке
+        // Инициализация
         window.onload = function() {
-            createFloatingElements();
-            updateBirthdayTimer(); // Запускаем сразу
-
-ℳ𝒶𝒯ℯℴ, [16.10.2025 22:39]
-setInterval(updateBirthdayTimer, 60000); // Обновлять каждую минуту
+            createSnow();
+            updateLiveTimer(); // Запускаем сразу
+            setInterval(updateLiveTimer, 1000); // Обновлять каждую секунду
             
             // Предварительная инициализация музыки
-            initializeMusic();
-            
-            // Показываем подсказку о музыке
-            setTimeout(() => {
-                document.getElementById('musicAlert').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('musicAlert').style.display = 'none';
-                }, 5000);
-            }, 3000);
-        }
+            const musicUrl = 'https://drive.google.com/uc?export=download&id=1NJutSpu5iebHSqbNcqLABQ9aRS6OxnOf';
 
-        // Запускаем таймер сразу и каждую секунду
-        updateBirthdayTimer();
-        setInterval(updateBirthdayTimer, 1000);
+backgroundMusic = new Audio();
+            backgroundMusic.src = musicUrl;
+            backgroundMusic.volume = 0.6;
+            backgroundMusic.loop = true;
+            backgroundMusic.preload = 'auto';
+        }
     </script>
 </body>
 </html>
