@@ -46,7 +46,6 @@
             color: #2c3e50;
         }
 
-        /* Снег на плашке */
         .snow-effect {
             position: absolute;
             top: -10px;
@@ -61,27 +60,6 @@
                 transparent 100%);
             border-radius: 50%;
             filter: blur(2px);
-        }
-
-        .snow-effect::before,
-        .snow-effect::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            filter: blur(1px);
-        }
-
-        .snow-effect::before {
-            top: 5px;
-            left: 10%;
-        }
-
-        .snow-effect::after {
-            top: 8px;
-            right: 10%;
         }
 
         h1 {
@@ -123,19 +101,19 @@
 
         @keyframes floatAround {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-
-25% { transform: translate(100px, 80px) rotate(90deg) scale(1.1); }
+            25% { transform: translate(100px, 80px) rotate(90deg) scale(1.1); }
             50% { transform: translate(60px, 150px) rotate(180deg) scale(1); }
             75% { transform: translate(-80px, 100px) rotate(270deg) scale(1.1); }
             100% { transform: translate(0, 0) rotate(360deg) scale(1); }
         }
 
-        /* Кассета в правом нижнем углу */
+        /* Кассета */
         #cassettePlayer {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 140px;
+
+width: 140px;
             height: 90px;
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             border-radius: 12px;
@@ -154,6 +132,11 @@
         #cassettePlayer:hover {
             transform: scale(1.15) rotate(5deg);
             box-shadow: 0 0 30px rgba(231, 76, 60, 0.8);
+        }
+
+        #cassettePlayer.playing {
+            animation: cassetteSpin 3s linear infinite;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
         }
 
         .cassette-hole {
@@ -177,6 +160,12 @@
             font-family: 'Montserrat', sans-serif;
             margin-top: 8px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes cassetteSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
         /* Таймер */
@@ -252,12 +241,29 @@
             box-shadow: 0 15px 35px rgba(231, 76, 60, 0.6);
             background: linear-gradient(135deg, #ff6b6b, #e74c3c);
         }
+
+/* Сообщение о музыке */
+        .music-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 1000;
+            font-family: 'Montserrat', sans-serif;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <div class="music-alert" id="musicAlert">Нажми на кассету справа внизу чтобы включить музыку! 🎵</div>
+    
     <div id="floatingElements"></div>
 
-<!-- Кассетный плеер -->
+    <!-- Кассетный плеер -->
     <div id="cassettePlayer" onclick="toggleMusic()">
         <div class="cassette-holes">
             <div class="cassette-hole"></div>
@@ -278,11 +284,11 @@
         <!-- Таймер -->
         <div id="birthdayTimer">
             <div class="timer-text">Примерно столько времени назад родился мой смысл жизни:</div>
-            <div class="timer-numbers" id="timer">загрузка...</div>
+            <div class="timer-numbers" id="timer">16 лет 0 дней 0 часов 0 минут</div>
             <div class="timer-text" id="timerText">и с тех пор мир стал светлее 🌟</div>
         </div>
         
-        <button onclick="showSecretMessage()">Тык</button>
+        <button onclick="showSecretMessage()">💖 Нажми меня, любимая</button>
         
         <div id="secretMessage">
             <p>Ты — самое прекрасное, что случалось со мной. Спасибо, что ты есть в моей жизни! 🌙✨</p>
@@ -292,25 +298,50 @@
     </div>
 
     <script>
-        // Музыкальный плеер
-        let backgroundMusic;
+        // Глобальные переменные
+        let backgroundMusic = null;
         let isMusicPlaying = false;
+        let musicInitialized = false;
 
+        // Инициализация музыки
+        function initializeMusic() {
+            if (musicInitialized) return;
+            
+            // Прямая ссылка для скачивания из Google Диска
+            const musicUrl = 'https://drive.google.com/uc?export=download&id=1NJutSpu5iebHSqbNcqLABQ9aRS6OxnOf';
+            
+            backgroundMusic = new Audio();
+            backgroundMusic.src = musicUrl;
+            backgroundMusic.volume = 0.6;
+            backgroundMusic.loop = true;
+            backgroundMusic.preload = 'auto';
+            
+            backgroundMusic.addEventListener('canplaythrough', function() {
+                console.log("Музыка готова к воспроизведению");
+                document.getElementById('musicAlert').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('musicAlert').style.display = 'none';
+                }, 5000);
+            });
+            
+            backgroundMusic.addEventListener('error', function(e) {
+                console.log("Ошибка загрузки музыки:", e);
+                alert('Проблема с загрузкой музыки. Проверьте ссылку или попробуйте другой браузер!');
+            });
+            
+            musicInitialized = true;
+        }
+
+        // Управление музыкой
         function toggleMusic() {
-            if (!backgroundMusic) {
-                // ЗАМЕНИТЕ ЭТУ ССЫЛКУ НА ПРЯМУЮ ССЫЛКУ НА ВАШУ ПЕСНЮ
-                backgroundMusic = new Audio('https://drive.google.com/file/d/1NJutSpu5iebHSqbNcqLABQ9aRS6OxnOf/view?usp=drive_link');
-                backgroundMusic.volume = 0.5;
-                backgroundMusic.loop = true;
-                
-                backgroundMusic.oncanplaythrough = function() {
-                    console.log("Музыка готова к воспроизведению");
-                };
-                
-                backgroundMusic.onerror = function() {
-                    console.log("Ошибка загрузки музыки");
-                    alert("Музыка не загрузилась. Проверьте ссылку на песню!");
-                };
+            if (!musicInitialized) {
+                initializeMusic();
+                // Даем время на загрузку
+
+setTimeout(() => {
+                    toggleMusic();
+                }, 1000);
+                return;
             }
             
             const cassette = document.getElementById('cassettePlayer');
@@ -318,17 +349,17 @@
             if (!isMusicPlaying) {
                 backgroundMusic.play().then(() => {
                     isMusicPlaying = true;
-                    cassette.style.animation = 'cassetteSpin 3s linear infinite';
-                    cassette.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                    cassette.classList.add('playing');
+                    console.log("Музыка играет");
                 }).catch(error => {
                     console.log("Ошибка воспроизведения:", error);
-                    alert("Нажмите разрешить автовоспроизведение звука!");
+                    alert('Нажмите "Разрешить" для воспроизведения звука на этой странице!');
                 });
             } else {
                 backgroundMusic.pause();
                 isMusicPlaying = false;
-                cassette.style.animation = 'none';
-                cassette.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                cassette.classList.remove('playing');
+                console.log("Музыка остановлена");
             }
         }
 
@@ -341,7 +372,7 @@
                 const element = document.createElement('div');
                 element.className = 'floating';
                 element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-element.style.left = Math.random() * 100 + 'vw';
+                element.style.left = Math.random() * 100 + 'vw';
                 element.style.top = Math.random() * 100 + 'vh';
                 element.style.fontSize = (Math.random() * 25 + 20) + 'px';
                 element.style.animationDuration = (Math.random() * 15 + 10) + 's';
@@ -353,26 +384,27 @@ element.style.left = Math.random() * 100 + 'vw';
 
         // Таймер с момента рождения - ИСПРАВЛЕННЫЙ
         function updateBirthdayTimer() {
-            const birthDate = new Date('2008-11-14T20:25:00+08:00'); // Иркутское время UTC+8
+            // Дата рождения: 14 ноября 2008, 20:25 Иркутское время (UTC+8)
+            const birthDate = new Date('2008-11-14T20:25:00+08:00');
             const now = new Date();
             
             // Разница в миллисекундах
-            const diff = now.getTime() - birthDate.getTime();
+            const diff = now - birthDate;
             
-            // Расчет времени
-            const years = now.getFullYear() - birthDate.getFullYear();
-            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const days = totalDays % 365;
+            // Расчет лет, дней, часов, минут
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
             // Обновление таймера
             document.getElementById('timer').textContent = 
-                ${years} лет ${days} дней;
+                ${years} лет ${days} дней ${hours} часов ${minutes} минут;
             
             // Обновляем дополнительный текст
             const timerText = document.getElementById('timerText');
+            const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
             if (totalDays < 30) {
                 timerText.textContent = "совсем недавно родилось моё счастье...";
             } else if (totalDays < 365) {
@@ -386,40 +418,32 @@ element.style.left = Math.random() * 100 + 'vw';
         function showSecretMessage() {
             const message = document.getElementById('secretMessage');
             message.style.display = 'block';
-            
-            // Добавляем анимацию появления
             message.style.animation = 'fadeInUp 1s ease';
         }
 
-        // Инициализация
+        // Инициализация при загрузке
         window.onload = function() {
             createFloatingElements();
             updateBirthdayTimer(); // Запускаем сразу
-            setInterval(updateBirthdayTimer, 1000); // Обновлять каждую секунду
+
+ℳ𝒶𝒯ℯℴ, [16.10.2025 22:39]
+setInterval(updateBirthdayTimer, 60000); // Обновлять каждую минуту
             
-            // Автозапуск музыки при первом клике
-            let firstClick = true;
-            document.body.addEventListener('click', function() {
-                if (firstClick) {
-                    setTimeout(() => {
-                        toggleMusic();
-                    }, 2000);
-                    firstClick = false;
-                }
-            });
+            // Предварительная инициализация музыки
+            initializeMusic();
+            
+            // Показываем подсказку о музыке
+            setTimeout(() => {
+                document.getElementById('musicAlert').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('musicAlert').style.display = 'none';
+                }, 5000);
+            }, 3000);
         }
 
-        // Стиль для анимации кассеты
-        const style = document.createElement('style');
-        style.textContent = 
-            @keyframes cassetteSpin {
-                0% { transform: rotate(0deg) scale(1); }
-                50% { transform: rotate(180deg) scale(1.1); }
-                100% { transform: rotate(360deg) scale(1); }
-            }
-        ;
-        document.head.appendChild(style);
+        // Запускаем таймер сразу и каждую секунду
+        updateBirthdayTimer();
+        setInterval(updateBirthdayTimer, 1000);
     </script>
 </body>
 </html>
-
